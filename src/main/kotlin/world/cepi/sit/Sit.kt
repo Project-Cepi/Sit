@@ -33,11 +33,10 @@ object Sit {
 
             handler {
                 val steerPacket = packet as ClientSteerVehiclePacket
-                val vehicle = player.vehicle!!
 
                 // 0x02 is the bitflag for dismounting
                 if ((steerPacket.flags and 0x02) == 0x02.toByte()) {
-                    player.vehicle?.removePassenger(player)
+                    unsit(player)
                     return@handler
                 }
             }
@@ -50,6 +49,7 @@ object Sit {
         val vehicle = player.vehicle
 
         vehicle?.removePassenger(player)
+        player.teleport(player.position.add(.0, .5, .0))
 
         if (vehicle?.hasTag(sitTag) == true) vehicle.remove()
     }
