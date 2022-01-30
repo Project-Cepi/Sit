@@ -32,6 +32,9 @@ object Sit {
             filters += { packet is ClientSteerVehiclePacket }
 
             handler {
+
+                if (sitInstance.arrow.aliveTicks < 5) return@handler
+
                 val steerPacket = packet as ClientSteerVehiclePacket
 
                 // 0x02 is the bitflag for dismounting
